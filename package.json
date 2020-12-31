@@ -1,0 +1,17 @@
+{
+  "name": "nest-device-access",
+  "version": "1.0.0",
+  "description": "A Node.js wrapper around the Nest Device Access REST API",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Greg Hesp <greg.hesp@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "2.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
