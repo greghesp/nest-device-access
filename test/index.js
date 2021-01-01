@@ -1,7 +1,10 @@
 const open = require('open');
+const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
+
 app.use(express.urlencoded({ extended: false }));
+dotenv.config();
 
 const NestDeviceAccess = require('../lib/index');
 
@@ -26,27 +29,43 @@ app.get('/connect/callback', async (req, res) => {
   const tokens = await NDA.getAccessTokens(oauth_code);
   ACCESS_TOKEN = tokens.access_token;
   REFRESH_TOKEN = tokens.refresh_token;
-  res.send(200);
+  res.json({
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token
+  });
 });
 
-app.get('/getDevices', async (req, res) => {
+app.get('/get-devices', async (req, res) => {
+  try {
+    const devices = await NDA.getDevices(ACCESS_TOKEN);
+    res.json(devices)
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.get('/get-camera-streams', async (req, res) => {
   try {
     const devices = await NDA.getDevices(ACCESS_TOKEN);
     const promises = [];
 
     devices.forEach(d => {
       if (d.type.includes('sdm.devices.types.DOORBELL', 'sdm.devices.types.CAMERA')) {
-        promises.push(NDA.get_camera_stream(d, ACCESS_TOKEN));
+        promises.push(NDA.getCameraStream(d, ACCESS_TOKEN));
       }
     });
 
-    const streams = await Promise.all(promises);
-    console.log(streams);
+     const streams = await Promise.all(promises);
+    res.json(streams)
   } catch (e) {
     console.log(e);
   }
 });
 
+
+
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:${3000}`);
+  console.log(`Get Devices: http://localhost:${3000}/get-devices`)
+  console.log(`Login: http://localhost:${3000}/login`);
 });
