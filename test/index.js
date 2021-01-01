@@ -31,14 +31,23 @@ app.get('/connect/callback', async (req, res) => {
   REFRESH_TOKEN = tokens.refresh_token;
   res.json({
     access_token: tokens.access_token,
-    refresh_token: tokens.refresh_token
+    refresh_token: tokens.refresh_token,
   });
 });
 
 app.get('/get-devices', async (req, res) => {
   try {
     const devices = await NDA.getDevices(ACCESS_TOKEN);
-    res.json(devices)
+    res.json(devices);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.get('/get-structures', async (req, res) => {
+  try {
+    const structures = await NDA.getStructures(ACCESS_TOKEN);
+    res.json(structures);
   } catch (e) {
     console.log(e);
   }
@@ -55,17 +64,16 @@ app.get('/get-camera-streams', async (req, res) => {
       }
     });
 
-     const streams = await Promise.all(promises);
-    res.json(streams)
+    const streams = await Promise.all(promises);
+    res.json(streams);
   } catch (e) {
     console.log(e);
   }
 });
 
-
-
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:${3000}`);
-  console.log(`Get Devices: http://localhost:${3000}/get-devices`)
+  console.log(`Get Devices: http://localhost:${3000}/get-devices`);
+  console.log(`Get Structures: http://localhost:${3000}/get-structures`);
   console.log(`Login: http://localhost:${3000}/login`);
 });
