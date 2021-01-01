@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 
-const NestDeviceAccess = require('../nest-api/lib/index');
+const NestDeviceAccess = require('../lib/index');
 
 const NDA = new NestDeviceAccess({
   project_id: process.env.PROJECT_ID,

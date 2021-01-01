@@ -1,4 +1,5 @@
 node_modules
 .idea
+test/.env
 test/.env.local
 test/node_modules
