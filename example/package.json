@@ -1,13 +1,13 @@
 {
-  "name": "test",
+  "name": "nest-device-access-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "An Express.js example of using the nest-device-access package",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run start"
   },
-  "author": "",
+  "author": "Greg Hesp <greg.hesp@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
